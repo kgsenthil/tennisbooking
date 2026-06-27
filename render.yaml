@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: tennisbooking
+    runtime: node
+    plan: free
+    # Install all deps (including devDeps for Vite build), build frontend, install server deps, run migration
+    buildCommand: npm install --include=dev && npm run build && cd server && npm install && node scripts/migrate.js
+    startCommand: node server/index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: BETTER_AUTH_SECRET
+        sync: false
